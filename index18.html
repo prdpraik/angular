@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<script src="angular.min.js"></script>
+<body ng-app="myApp">
+<div  ng-controller="myCtrl">
+    Name: <input ng-model="name">
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+//console.log(app);
+app.controller('myCtrl', function($scope) {
+    $scope.name = "John Doe";
+});
+</script>
+
+</body>
+</html>

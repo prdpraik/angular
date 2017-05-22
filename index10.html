@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<script src="angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" w4-test-directive></div>
+
+<script>
+var app = angular.module("myApp", []);
+app.directive("w4TestDirective", function() {
+    return {
+        template : "I was made in a directive constructor!"
+    };
+});
+</script>
+
+</body>
+</html>

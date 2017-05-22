@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<script src="angular.min.js"></script>
+<body>
+<form ng-app="" name="myForm">
+    Email:
+    <input type="email" name="myAddress1" ng-model="text">
+    <span ng-show="myForm.myAddress1.$error.email">Not a valid e-mail address</span>
+</form>
+
+</body>
+</html>
