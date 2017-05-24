@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<script src="angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+
+<ul>
+    <li ng-repeat="a in names">{{a}}</li>
+</ul>
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+
+app.controller('myCtrl', function($scope) {
+    $scope.names = ["Emil", "Tobias","Linus"];
+});
+</script>
+
+
+
+</body>
+</html>
