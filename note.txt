@@ -1,0 +1,12 @@
+
+D:\angular>git add .
+
+D:\angular>git commit -m "Add existing file 09:27"
+
+
+D:\angular>git push origin master
+Username for 'https://github.com': prdpraik
+Password for 'https://prdpraik@github.com':
+
+
+D:\angular>
