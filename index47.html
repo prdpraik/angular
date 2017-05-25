@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app=""   ng-init="brn1=true;hour=13">
+
+<p ng-show="true">I am visible.</p>
+
+<p ng-show="false">I am not visible.</p>
+
+
+
+<p ng-show="brn1">I am visible.</p>
+
+<p ng-show="brn2">I am not visible.</p>
+<p>
+<input type="checkbox" ng-model="brn1"/>Button
+</p>
+<p ng-show="hour > 12">I am visible.</p>
+
+
+<h2>{{ count }}</h2>
+
+<p ng-hide="true">I am not visible1.</p>
+
+<p ng-hide="false">I am visible2.</p>
+
+
+</div> 
+
+</body>
+</html>
