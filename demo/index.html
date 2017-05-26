@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+<body ng-app="myApp">
+<div ng-view></div>
+
+</body>
+<script>
+var app = angular.module("myApp", ["ngRoute"]);
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl : "login.htm",
+		 controller : "londonCtrl"
+    }).otherwise({
+        templateUrl :"404.html",
+		 controller : "londonCtrl"
+		
+    });
+	});
+	
+app.controller("londonCtrl", function ($scope) {
+    $scope.msg = 'images.png';
+});
+app.controller('validateCtrl', function($scope,$http) {
+$scope.submited=false;
+$scope.email="";
+$scope.pwd="";
+  /*var formData = {
+        email: "default",
+        pwd: "default"
+    };*/
+$scope.submitf = function(){
+   
+   
+   
+   $http({
+                method: 'POST',
+                url: 'test.php',
+                data: { email: $scope.email, password: $scope.pwd },
+                dataType: 'json',
+                contentType: "application/json"
+            }).success(function (result) {
+               // $(".loader").fadeOut("slow");
+                if (result.success === false) {
+                   // $scope.errors = result.errors;
+                }
+                else {
+                   // $scope.RedirectToDashboard();
+                }
+
+
+            })
+                        .error(function (xhr, ajaxOptions, thrownError) {
+						
+							alert("ss");
+						
+                            //$ngBootbox.alert('Error occured..Please try again..');
+                        });
+						
+						
+//alert($scope.email.$error.required);
+//alert($scope.email);
+
+
+/*$http({
+                method: 'POST',
+                url: LoginConfig.LoginIndex,
+                data: JSON.stringify({ user: $scope.User, returnUrl: ReturnUrl }),
+                dataType: 'json',
+                contentType: "application/json"
+            }).success(function (result) {
+                $(".loader").fadeOut("slow");
+                if (result.success === false) {
+                    $scope.errors = result.errors;
+                }
+                else {
+                    $scope.RedirectToDashboard();
+                }
+
+
+            })
+                        .error(function (xhr, ajaxOptions, thrownError) {
+                            $ngBootbox.alert('Error occured..Please try again..');
+                        });*/
+						
+						
+console.log("posting data....");
+ alert($scope.form);
+formData = $scope.form;
+        console.log(formData);
+
+}
+
+ $scope.save = function() {
+        formData = $scope.form;
+        console.log (formData);
+    };
+
+});
+</script>
+</html>
