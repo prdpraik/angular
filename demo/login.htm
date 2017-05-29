@@ -5,7 +5,7 @@ name="myForm" novalidate>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="email">Email:</label>
 						<div class="col-sm-10">
-						<input class="form-control" type="email" name="email" ng-model="email" required placeholder="Enter email">
+						<input class="form-control" type="email" name="email" ng-model="tempUser.email" required placeholder="Enter email">
 						<span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
 						<span ng-show="myForm.email.$error.required">Email is required.</span>
 						<span ng-show="myForm.email.$error.email">Invalid email address.</span>
@@ -15,7 +15,7 @@ name="myForm" novalidate>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="pwd">Password:</label>
 				<div class="col-sm-10">          
-					<input type="password" class="form-control"  ng-model="pwd" placeholder="Enter password" name="pwd" required >
+					<input type="password" class="form-control"  ng-model="tempUser.pwd" placeholder="Enter password" name="pwd" required >
 					<span style="color:red" ng-show="myForm.pwd.$dirty && myForm.pwd.$invalid">
 					<span ng-show="myForm.pwd.$error.required">Enter password.</span>
 					</span>

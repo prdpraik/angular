@@ -34,32 +34,31 @@ app.controller('validateCtrl', function($scope,$http) {
 $scope.submited=false;
 $scope.email="";
 $scope.pwd="";
+ $scope.tempUser = {};
   /*var formData = {
         email: "default",
         pwd: "default"
     };*/
 $scope.submitf = function(){
    
-   
+   console.log($scope.tempUser);
    
    $http({
                 method: 'POST',
                 url: 'test.php',
-                data: { email: $scope.email, password: $scope.pwd },
+                  data: $.param({'user' : $scope.tempUser}),
                 dataType: 'json',
-                contentType: "application/json"
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function (result) {
-               // $(".loader").fadeOut("slow");
-                if (result.success === false) {
-                   // $scope.errors = result.errors;
+			    alert(result.result);
+                /*if (result.success === false) {
                 }
                 else {
-                   // $scope.RedirectToDashboard();
-                }
+                  
+                }*/
 
 
-            })
-                        .error(function (xhr, ajaxOptions, thrownError) {
+            }) .error(function (xhr, ajaxOptions, thrownError) {
 						
 							alert("ss");
 						
@@ -94,7 +93,7 @@ $scope.submitf = function(){
 						
 						
 console.log("posting data....");
- alert($scope.form);
+ //alert($scope.form);
 formData = $scope.form;
         console.log(formData);
 
