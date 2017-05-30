@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <meta charset="utf-8">
@@ -19,77 +20,97 @@ app.config(function($routeProvider) {
     $routeProvider
     .when("/", {
         templateUrl : "login.htm",
-		 controller : "londonCtrl"
-    }).otherwise({
+		controller : "dashboard"
+		 //controller : "londonCtrl"
+    })
+	.when("/dashboard", {
+	    templateUrl : "dashboard.php",
+		controller : "dashboard"
+	}).when("/logout", {
+	    templateUrl : "logout.php",
+		controller : "logout"
+	})
+	.when("/add_user", {
+	    templateUrl : "add_user.php",
+		controller : "add_user"
+	})
+	
+	.otherwise({
         templateUrl :"404.html",
 		 controller : "londonCtrl"
 		
     });
 	});
-	
+
 app.controller("londonCtrl", function ($scope) {
     $scope.msg = 'images.png';
 });
-app.controller('validateCtrl', function($scope,$http) {
+app.controller("add_user", function ($scope) {
+$scope.add_user_class="active";
+
+});
+app.controller("logout", function ($scope, $location) {
+ $location.url('/');
+   // $scope.msg = 'images.png';
+  // alert(1);
+});
+app.controller("myCtrl", function($scope) {
+$scope.email_validate=false;
+$scope.tempUser = { email : "fsdfsd"};
+
+
+ $scope.myTxt = "You have not yet clicked submit";
+  $scope.myFunc = function () {
+     console.log($scope.tempUser.email);
+     $scope.myTxt = "You clicked submit!";
+  }
+});
+app.controller("dashboard", function ($scope,$http,$location) {
+   $http({
+                method: 'POST',
+                url: 'test.php',
+                data: $.param({action:2}),
+                dataType: 'json',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function (result) {
+			   if(result.return==1){
+			    if($location.$$path!='/dashboard'){
+						$location.url('dashboard');
+				 }
+					$scope.home_class="active";
+					$scope.welecome_msg="Welcome "+result.name;
+				} else {
+				  $location.url('/');
+				}
+            }) .error(function (xhr, ajaxOptions, thrownError) {
+						
+							alert("ss");
+			 });
+});
+app.controller('validateCtrl', function($scope,$http,$location) {
 $scope.submited=false;
 $scope.email="";
 $scope.pwd="";
  $scope.tempUser = {};
-  /*var formData = {
-        email: "default",
-        pwd: "default"
-    };*/
 $scope.submitf = function(){
-   
-   console.log($scope.tempUser);
-   
    $http({
                 method: 'POST',
                 url: 'test.php',
-                  data: $.param({'user' : $scope.tempUser}),
+                data: $.param({action:1,'user' : $scope.tempUser}),
                 dataType: 'json',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function (result) {
-			    alert(result.result);
-                /*if (result.success === false) {
-                }
-                else {
-                  
-                }*/
-
-
+			   if(result.result==1){
+			      $location.url('dashboard');
+				} else {
+				 alert('login failed');
+				}
             }) .error(function (xhr, ajaxOptions, thrownError) {
 						
 							alert("ss");
-						
-                            //$ngBootbox.alert('Error occured..Please try again..');
-                        });
+			 });
 						
 						
-//alert($scope.email.$error.required);
-//alert($scope.email);
-
-
-/*$http({
-                method: 'POST',
-                url: LoginConfig.LoginIndex,
-                data: JSON.stringify({ user: $scope.User, returnUrl: ReturnUrl }),
-                dataType: 'json',
-                contentType: "application/json"
-            }).success(function (result) {
-                $(".loader").fadeOut("slow");
-                if (result.success === false) {
-                    $scope.errors = result.errors;
-                }
-                else {
-                    $scope.RedirectToDashboard();
-                }
-
-
-            })
-                        .error(function (xhr, ajaxOptions, thrownError) {
-                            $ngBootbox.alert('Error occured..Please try again..');
-                        });*/
 						
 						
 console.log("posting data....");
