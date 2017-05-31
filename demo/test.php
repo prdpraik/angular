@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 
-if($_REQUEST['action']==1){
+if($_POST['action']==1){
 $data=$_POST['user'];
 extract($data);
 $stmt = $conn->prepare(sprintf("SELECT * FROM user WHERE user_name='%s' AND password='%s'",$email,$pwd)); 
@@ -15,7 +15,7 @@ $stmt = $conn->prepare(sprintf("SELECT * FROM user WHERE user_name='%s' AND pass
 
 
 echo json_encode(array('result'=>$result));
-} else if($_REQUEST['action']==2){
+} else if($_POST['action']==2){
 $array_data=array();
   $userId=sprintf("%d",$_SESSION['user_id']);
 $array_data['return']=0;
@@ -44,6 +44,15 @@ $array_data['menu']=$menu;
 		
    }
     echo json_encode($array_data);
+} else if($_POST['action']==3){
+	$stmt = $conn->prepare(sprintf("SELECT name FROM user WHERE user_name='%s'",$_POST['email'])); 
+	    $stmt->execute();
+		$is_valid=$stmt->rowCount();
+		$status=false;
+		if($is_valid){
+			$status=true;
+		}
+		echo json_encode(array('status'=>$status));
 }
 
 ?>
