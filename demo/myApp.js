@@ -1,47 +1,6 @@
 var app = angular.module("myApp", ["ngRoute"]);
 
 
-app.directive('checkEmailExists', function ($http){ 
-   return {
-      require: 'ngModel',
-      link: function(scope, elem, attr, ngModel) {
-		  var valid = false;
-		 var validate = function(viewValue){
-		$http({
-		method: 'post',
-		url: 'test.php',
-		async:'false',
-			data: $.param({
-					action:3,
-					email:viewValue
-			}),
-			dataType: 'json',
-			headers: {
-			'Content-Type': 'application/x-www-form-urlencoded'
-			}
-	  }).then(function successCallback(response) {
-		valid = response.data.status;
-		
-		 ngModel.$setValidity('checkEmailExists', !valid);
-            return viewValue;
-		 
-	  });
-		 
-		 
-		 }
-		 
-		 
-		ngModel.$parsers.unshift(validate);
-        ngModel.$formatters.push(validate);
-
-        attr.$observe('checkEmailExists', function (comparisonModel) {
-            return validate(ngModel.$viewValue);
-        });
-		 
-		 
-      }
-   };
-});
 
 app.config(function($routeProvider) {
     $routeProvider
@@ -77,13 +36,17 @@ $scope.add_user_class="active";
 });
 app.controller("logout", function ($scope, $location) {
  $location.url('/');
-   // $scope.msg = 'images.png';
-  // alert(1);
 });
 app.controller("myCtrl", function($scope,$http) {
 $scope.email_validate=false;
 $scope.is_exists=false;
 $scope.tempUser = { email : ""};
+
+ $scope.tempUser = {
+         value: new Date(),
+         currentDate: new Date()
+       };
+	     // console.log($scope.tempUser);
  $scope.myTxt = "You have not yet clicked submit";
   $scope.myFunc = function (myForm) {
   if($scope.tempUser.email!=""){
@@ -116,27 +79,7 @@ $scope.tempUser = { email : ""};
 	   //$scope.unamestatus = response.data;
 	  });
    };*/
-   var compareTo = function() {
-    return {
-      require: "ngModel",
-      scope: {
-        otherModelValue: "=compareTo"
-      },
-      link: function(scope, element, attributes, ngModel) {
-
-        ngModel.$validators.compareTo = function(modelValue) {
-          return modelValue == scope.otherModelValue;
-        };
-
-        scope.$watch("otherModelValue", function() {
-          ngModel.$validate();
-        });
-      }
-    };
-  };
-
-  app.directive("compareTo", compareTo);
-  app.controller("RegistrationController", RegistrationController);
+   
    
 });
 app.controller("dashboard", function ($scope,$http,$location) {
@@ -200,3 +143,61 @@ formData = $scope.form;
     };
 
 });
+
+app.directive('validPasswordC', function() {
+  return {
+    require: 'ngModel',
+    scope: {
+      reference: '=validPasswordC'
+    },
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function(viewValue, $scope) {
+			var noMatch = viewValue != scope.reference
+			ctrl.$setValidity('noMatch', !noMatch);
+			return (noMatch)?noMatch:!noMatch;
+      });
+
+      scope.$watch("reference", function(value) {;
+        ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
+
+      });
+    }
+  }
+});
+
+app.directive('checkEmailExists', function ($http){ 
+   return {
+      require: 'ngModel',
+      link: function(scope, elem, attr, ngModel) {
+		  var valid = false;
+		 var validate = function(viewValue){
+		$http({
+		method: 'post',
+		url: 'test.php',
+		async:'false',
+			data: $.param({
+					action:3,
+					email:viewValue
+			}),
+			dataType: 'json',
+			headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+			}
+	  }).then(function successCallback(response) {
+		valid = response.data.status;
+		
+		 ngModel.$setValidity('checkEmailExists', !valid);
+            return viewValue;
+		 
+	  });
+
+		 }
+		ngModel.$parsers.unshift(validate);
+        ngModel.$formatters.push(validate);
+        attr.$observe('checkEmailExists', function (comparisonModel) {
+            return validate(ngModel.$viewValue);
+        });
+      }
+   };
+});
+ 

@@ -1,0 +1,66 @@
+<html><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}.ng-hide-add-active,.ng-hide-remove{display:block!important;}</style>
+    <style>
+        
+    </style>
+    </head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+<div ng-app="app" class="ng-scope">
+  <div ng-controller="homeCtrl" class="ng-scope">
+    <p class="ng-binding">Password:</p>
+    <form name="signupForm" class="ng-invalid ng-invalid-required ng-dirty ng-invalid-pattern">
+      <div class="fieldset" ng-class="{'has-error':formData.password.$invalid &amp;&amp; !formData.password.$pristine}">
+        <label>Password</label>
+        <input type="password" id="password" name="password" ng-model="formData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" placeholder="password" required="" class="ng-valid-maxlength ng-valid-minlength ng-dirty ng-valid-required ng-invalid ng-invalid-pattern">
+
+        <p ng-show="signupForm.password.$error.required" class="error ng-hide">*</p>
+        <p ng-show="signupForm.password.$error.minlength" class="error ng-hide">
+          Passwords must be between 8 and 20 characters.</p>
+        <p ng-show="signupForm.password.$error.pattern" class="error">
+          Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</p>
+      </div>
+
+      <div class="fieldset" ng-class="{'has-error':formData.password_c.$invalid &amp;&amp; !formData.password_c.$pristine}">
+        <label for="password_c">Confirm Password</label>
+        <input type="password" id="password_c" name="password_c" ng-model="formData.password_c" placeholder="confirm password" valid-password-c="formData.password" required="" class="ng-isolate-scope ng-pristine ng-invalid ng-invalid-required ng-valid-no-match">
+
+        <p ng-show="signupForm.password_c.$error.noMatch" class="error ng-hide">Passwords do not match.
+          </p><p ng-show="signupForm.password_c.$error.required" class="error">*</p>
+      </div>
+    </form>
+  </div>
+</div>
+    <script type="text/javascript">
+        var app = angular.module('app', []);
+app.directive('validPasswordC', function() {
+  return {
+    require: 'ngModel',
+    scope: {
+
+      reference: '=validPasswordC'
+
+    },
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function(viewValue, $scope) {
+
+        var noMatch = viewValue != scope.reference
+        ctrl.$setValidity('noMatch', !noMatch);
+        return (noMatch)?noMatch:!noMatch;
+      });
+
+      scope.$watch("reference", function(value) {;
+        ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
+
+      });
+    }
+  }
+});
+app.controller('homeCtrl', function($scope) {
+
+
+
+
+});
+    </script>
+
+</body></html>
