@@ -8,7 +8,7 @@
 	
       <div ng-controller = "myCtrl">
          <input type="file" file-model = "myFile" />
-         <button ng-click="uploadFile()">upload me</button> {{ abc }}
+         <button ng-click="uploadFile()">upload me</button> <img ng-if="image_name" width="100" src="images/{{ image_name }}" />
       </div>
       
       <script>
@@ -50,7 +50,7 @@
             
                .success(function(data){
 			    console.log(data);
-				scope.abc=data;
+				scope.image_name=data.image_name;
                })
             
                .error(function(){
@@ -59,7 +59,7 @@
          }]);
       
          myApp.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
-		 $scope.abc="adv";
+		 $scope.image_name="";
             /*$scope.uploadFile = function(){
                var file = $scope.myFile;
                

@@ -53,6 +53,12 @@ $array_data['menu']=$menu;
 			$status=true;
 		}
 		echo json_encode(array('status'=>$status));
-}
+}  else if($_POST['action']==4){
 
+    $q=sprintf("INSERT INTO user (user_name,password,name,image_name,date_birth) VALUES('%s','%s','%s','%s','%s')",$_POST['user']['email'],$_POST['user']['password'],$_POST['user']['username'],$_POST['user']['hidden_file'],date("Y-m-d",strtotime($_POST['user']['value'])));
+  $stmt = $conn->prepare($q);
+   $stmt->execute();
+  echo json_encode(array('response'=>"1"));
+ //print_r($_POST);
+}
 ?>

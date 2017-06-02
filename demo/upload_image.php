@@ -7,5 +7,5 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
     move_uploaded_file($_FILES['file']['tmp_name'], 'images/' . $newfilename);
 
 // give callback to your angular code with the image src name
-    echo json_encode($newfilename);
+    echo json_encode(array('image_name'=>$newfilename));
 }

@@ -37,11 +37,10 @@ $scope.add_user_class="active";
 app.controller("logout", function ($scope, $location) {
  $location.url('/');
 });
-app.controller("myCtrl", function($scope,$http,$filter,$route) {
+app.controller("myCtrl", function($scope,$http) {
 $scope.email_validate=false;
 $scope.is_exists=false;
 $scope.image_name="";
-$scope.hidden_file=""; 
 $scope.tempUser = { 
 					email : ""
 
@@ -56,35 +55,38 @@ $scope.tempUser = {
 	     // console.log($scope.tempUser);
  $scope.myTxt = "You have not yet clicked submit";
   $scope.myFunc = function (myForm) {
-   console.log($scope.tempUser);
-    //alert($scope.tempUser.value);
+  if($scope.tempUser.email!=""){
+    //$scope.checkEmail();
+	}
+	alert(myForm.$valid);
 
-  
-	//alert(myForm.$valid);
-
-    // console.log($scope.tempUser.email);
+     console.log($scope.tempUser.email);
 	 $scope.email_validate=true; 
-	 if(myForm.$valid){
-	    $scope.tempUser.value = $filter('date')(new Date($scope.tempUser.value),'yyyy-MM-dd');
-			$http({
-			method: 'POST',
-			url: 'test.php',
-			data: $.param({action:4,'user' : $scope.tempUser}),
-			dataType: 'json',
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-			}).success(function (result) {
-			if(result.response==1){
-				$route.reload();
-			//$location.url('dashboard');
-			} else {
-			//alert('login failed');
-			}
-			}) .error(function (xhr, ajaxOptions, thrownError) {
-			alert("ss");
-			});
-	 }
      $scope.myTxt = "You clicked submit!";
   }
+  /* $scope.checkEmail = function(){
+	   $http({
+		method: 'post',
+		url: 'test.php',
+		async:'false',
+			data: $.param({
+					action:3,
+					email:$scope.tempUser.email
+			}),
+			dataType: 'json',
+			headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+			}
+	  }).then(function successCallback(response) {
+		$scope.is_exists=response.data.status;
+		
+	 // $scope.isexists=response.data.status;
+	 //  alert(response);
+	   //$scope.unamestatus = response.data;
+	  });
+   };*/
+   
+   
 });
 app.controller("dashboard", function ($scope,$http,$location) {
    $http({
@@ -94,8 +96,7 @@ app.controller("dashboard", function ($scope,$http,$location) {
                 dataType: 'json',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function (result) {
-			   if(result.return>0){
-			  
+			   if(result.return==1){
 			    if($location.$$path!='/dashboard'){
 						$location.url('dashboard');
 				 }
@@ -113,24 +114,25 @@ app.controller('validateCtrl', function($scope,$http,$location) {
 $scope.submited=false;
 $scope.email="";
 $scope.pwd="";
-$scope.tempUser = {};
 
+ $scope.tempUser = {};
 $scope.submitf = function(){
-$http({
-method: 'POST',
-url: 'test.php',
-data: $.param({action:1,'user' : $scope.tempUser}),
-dataType: 'json',
-headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-}).success(function (result) {
-	if(result.result==1){
-		$location.url('dashboard');
-	} else {
-		alert('login failed');
-	}
-	}) .error(function (xhr, ajaxOptions, thrownError) {
-		alert("ss");
-});
+   $http({
+                method: 'POST',
+                url: 'test.php',
+                data: $.param({action:1,'user' : $scope.tempUser}),
+                dataType: 'json',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function (result) {
+			   if(result.result==1){
+			      $location.url('dashboard');
+				} else {
+				 alert('login failed');
+				}
+            }) .error(function (xhr, ajaxOptions, thrownError) {
+						
+							alert("ss");
+			 });
 						
 						
 						
@@ -208,25 +210,32 @@ app.directive('checkEmailExists', function ($http){
    var validFormats = ['jpg', 'gif'];
             return {
                restrict: 'A',
-			    require: 'ngModel',
-               link: function(scope, element, attrs, ctrl) {
+			   require: 'ngModel',
+               link: function(scope, element, attrs,ngModel) {
                   var model = $parse(attrs.fileModel);
 				   
                   var modelSetter = model.assign;
+                  
                   element.bind('change', function(){
+				   
                      scope.$apply(function(){
+
                         modelSetter(scope, element[0].files[0]);
-						var file = scope.myFile;
-						var value =file.name;
-						var ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();
-						var uploadUrl = "upload_image.php";
-						if((validFormats.indexOf(ext)!== -1)) {
-						fileUpload.uploadFileToUrl(file, uploadUrl,scope);
-							ctrl.$setValidity("format", true);
-						} else{  
-							ctrl.$setValidity("format", false);
-						//console.log(scope);
-						}
+						
+						 var file = scope.myFile;
+						 //
+						 var value =file.name
+						 var ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();
+						  
+						  console.log(file.name);
+						   var uploadUrl = "upload_image.php";
+						   if((validFormats.indexOf(ext)!== -1))
+						   {
+						      fileUpload.uploadFileToUrl(file, uploadUrl,scope);
+						   }
+						   else{
+							 ngModel.$setValidity('imageValidation', false); 
+						   }
 						
 						
                      });
@@ -247,10 +256,8 @@ app.directive('checkEmailExists', function ($http){
                })
             
                .success(function(data){
-			   
+			    console.log(data);
 				scope.image_name=data.image_name;
-				
-				scope.tempUser.hidden_file = data.image_name;
                })
             
                .error(function(){
