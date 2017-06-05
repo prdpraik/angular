@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Slider - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+ 
+</head>
+<body>
+ 
+<div id="slider"></div>
+<p>The slider's value is: <span id="slider-value">0</span></p>
+ 
+ <div  ng-app="MyApp">
+<div ng-controller="AppCtrl">
+    <div id="ng-slider"></div>
+    <p>The slider's value is:  {{sliderValue}}</p>
+  </div>
+  <!------------------------------------>
+  <div ng-controller="AppCtrl1">
+    <div jq-slider model="sliderValue"></div>
+    <p>The slider's value is: <input ng-model="sliderValue"/></p>
+  </div>
+</div>
+
+ <script>
+  $( function() {
+    $( "#slider" ).slider({
+    change: function(event, ui) {
+      $('#slider-value').html(ui.value);
+    }
+  });
+  } );
+  
+  var app = angular.module('MyApp', []);
+
+  
+app.controller('AppCtrl', ['$scope', function($scope) {
+  $scope.sliderValue = 0;
+  $('#ng-slider').slider({
+    slide: function(event, ui) {
+      $scope.$apply(function() {
+        $scope.sliderValue = ui.value;
+      });
+    }
+  });
+}]);
+
+app.controller('AppCtrl1', ['$scope', function($scope) {
+  $scope.sliderValue = 10;
+}]);
+app.directive('jqSlider', [function() {
+  return {
+    restrict: 'A',
+    scope: {
+      'model': '='
+    },
+    link: function($scope, elem, attrs) {
+      $(elem).slider({
+        value: +$scope.model,
+        slide: function(event, ui) {
+          $scope.$apply(function() {
+            $scope.model = ui.value;
+          });
+        }
+      });
+    }
+  };
+}]);
+
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>

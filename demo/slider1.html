@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Slider - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+ 
+</head>
+<body>
+ 
+<div id="slider"></div>
+<p>The slider's value is: <span id="slider-value">0</span></p>
+ 
+<div ng-app="MyApp1">
+  <div ng-controller="AppCtrl">
+    <div jq-slider model="sliderValue"></div>
+    <p>The slider's value is: <input ng-model="sliderValue"/></p>
+  </div>
+  
+
+  
+</div>
+ <script>
+ var app1 = angular.module('MyApp1', []);
+app1.controller('AppCtrl', ['$scope', function($scope) {
+  $scope.sliderValue = 50;
+}]);
+app1.directive('jqSlider', [function() {
+  return {
+    restrict: 'A',
+    scope: {
+      'model': '='
+    },
+    link: function(scope, elem, attrs) {
+	 var $slider = $(elem);
+      $slider.slider({
+        value: +scope.model,
+        slide: function(event, ui) {
+          scope.$apply(function() {
+            scope.model = ui.value;
+          });
+        }
+      });
+
+      scope.$watch('model', function(newVal) {
+        $slider.slider('value', newVal);
+      });
+    }
+  };
+}]);
+
+
+  </script>
+</body>
+
+</html>
