@@ -1,4 +1,4 @@
-System.register(["angular2/core"], function(exports_1, context_1) {
+System.register(["angular2/core", "./country.contacts"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,32 +10,32 @@ System.register(["angular2/core"], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
-    var MyHelloWorldClass;
+    var core_1, country_contacts_1;
+    var CountryService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (country_contacts_1_1) {
+                country_contacts_1 = country_contacts_1_1;
             }],
         execute: function() {
-            MyHelloWorldClass = (function () {
-                function MyHelloWorldClass() {
-                    this.appTitle = 'Welcome12';
-                    this.appTitle1 = 'Pradeep';
+            //@Injectable() specifies class is available to an injector for instantiation and an injector will display an error when trying to instantiate a class that is not marked as @Injectable()
+            CountryService = (function () {
+                function CountryService() {
                 }
-                MyHelloWorldClass = __decorate([
-                    core_1.Component({
-                        selector: 'my-app1'
-                    }),
-                    core_1.View({
-                        template: '<h2>Hello World !! {{appTitle}} {{appTitle1}}</h2>'
-                    }), 
+                CountryService.prototype.getContacts = function () {
+                    return Promise.resolve(country_contacts_1.COUNTRIES); // takes values from country.contacts typescript file
+                };
+                CountryService = __decorate([
+                    core_1.Injectable(), 
                     __metadata('design:paramtypes', [])
-                ], MyHelloWorldClass);
-                return MyHelloWorldClass;
+                ], CountryService);
+                return CountryService;
             }());
-            exports_1("MyHelloWorldClass", MyHelloWorldClass);
+            exports_1("CountryService", CountryService);
         }
     }
 });
-//# sourceMappingURL=hello_world_app.component.js.map
+//# sourceMappingURL=country.service.js.map

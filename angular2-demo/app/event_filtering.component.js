@@ -1,4 +1,4 @@
-System.register(["angular2/core"], function(exports_1, context_1) {
+System.register(['angular2/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -11,31 +11,28 @@ System.register(["angular2/core"], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var MyHelloWorldClass;
+    var EventFilteringComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            MyHelloWorldClass = (function () {
-                function MyHelloWorldClass() {
-                    this.appTitle = 'Welcome12';
-                    this.appTitle1 = 'Pradeep';
+            EventFilteringComponent = (function () {
+                function EventFilteringComponent() {
+                    this.values = '';
                 }
-                MyHelloWorldClass = __decorate([
+                EventFilteringComponent = __decorate([
                     core_1.Component({
-                        selector: 'my-app1'
-                    }),
-                    core_1.View({
-                        template: '<h2>Hello World !! {{appTitle}} {{appTitle1}}</h2>'
+                        selector: 'event-filtering',
+                        template: "\n    <input #myval (keyup.enter)=\"values=myval.value\">\n    <p>{{values}}</p>\n  "
                     }), 
                     __metadata('design:paramtypes', [])
-                ], MyHelloWorldClass);
-                return MyHelloWorldClass;
+                ], EventFilteringComponent);
+                return EventFilteringComponent;
             }());
-            exports_1("MyHelloWorldClass", MyHelloWorldClass);
+            exports_1("EventFilteringComponent", EventFilteringComponent);
         }
     }
 });
-//# sourceMappingURL=hello_world_app.component.js.map
+//# sourceMappingURL=event_filtering.component.js.map

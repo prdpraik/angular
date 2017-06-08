@@ -1,4 +1,4 @@
-System.register(["angular2/core"], function(exports_1, context_1) {
+System.register(['angular2/core', './contact-form.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,32 +10,32 @@ System.register(["angular2/core"], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
-    var MyHelloWorldClass;
+    var core_1, contact_form_component_1;
+    var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (contact_form_component_1_1) {
+                contact_form_component_1 = contact_form_component_1_1;
             }],
         execute: function() {
-            MyHelloWorldClass = (function () {
-                function MyHelloWorldClass() {
-                    this.appTitle = 'Welcome12';
-                    this.appTitle1 = 'Pradeep';
+            AppComponent = (function () {
+                function AppComponent() {
                 }
-                MyHelloWorldClass = __decorate([
+                AppComponent = __decorate([
                     core_1.Component({
-                        selector: 'my-app1'
-                    }),
-                    core_1.View({
-                        template: '<h2>Hello World !! {{appTitle}} {{appTitle1}}</h2>'
+                        selector: 'my-app',
+                        template: '<contact-form></contact-form>',
+                        directives: [contact_form_component_1.ContactComponent]
                     }), 
                     __metadata('design:paramtypes', [])
-                ], MyHelloWorldClass);
-                return MyHelloWorldClass;
+                ], AppComponent);
+                return AppComponent;
             }());
-            exports_1("MyHelloWorldClass", MyHelloWorldClass);
+            exports_1("AppComponent", AppComponent);
         }
     }
 });
-//# sourceMappingURL=hello_world_app.component.js.map
+//# sourceMappingURL=forms_app.component.js.map

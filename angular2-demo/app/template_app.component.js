@@ -11,31 +11,31 @@ System.register(["angular2/core"], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var MyHelloWorldClass;
+    var MyTemplate;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            MyHelloWorldClass = (function () {
-                function MyHelloWorldClass() {
-                    this.appTitle = 'Welcome12';
-                    this.appTitle1 = 'Pradeep';
+            //framework recognizes @Component annotation and knows that we are trying to create a new component
+            MyTemplate = (function () {
+                function MyTemplate() {
                 }
-                MyHelloWorldClass = __decorate([
+                MyTemplate = __decorate([
                     core_1.Component({
-                        selector: 'my-app1'
+                        selector: 'my-app' //specifies selector for HTML element named 'app'
                     }),
                     core_1.View({
-                        template: '<h2>Hello World !! {{appTitle}} {{appTitle1}}</h2>'
+                        //template property holds component's companion template that tells Angular how to render a view
+                        template: '<h2>Welcome to the world of {{val}}</h2>'
                     }), 
                     __metadata('design:paramtypes', [])
-                ], MyHelloWorldClass);
-                return MyHelloWorldClass;
+                ], MyTemplate);
+                return MyTemplate;
             }());
-            exports_1("MyHelloWorldClass", MyHelloWorldClass);
+            exports_1("MyTemplate", MyTemplate);
         }
     }
 });
-//# sourceMappingURL=hello_world_app.component.js.map
+//# sourceMappingURL=template_app.component.js.map

@@ -5,9 +5,12 @@ import {Component, View} from "angular2/core";
 })
 
 @View({
-  template: '<h2>Hello World !!</h2>'
+  template: '<h2>Hello World !! {{appTitle}} {{appTitle1}}</h2>'
 })
 
 export class MyHelloWorldClass {
+ appTitle: string = 'Welcome12';
+appTitle1: string = 'Pradeep';  
+ 
 
 }

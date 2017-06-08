@@ -11,31 +11,32 @@ System.register(["angular2/core"], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var MyHelloWorldClass;
+    var ItemComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            MyHelloWorldClass = (function () {
-                function MyHelloWorldClass() {
-                    this.appTitle = 'Welcome12';
-                    this.appTitle1 = 'Pradeep';
+            ItemComponent = (function () {
+                function ItemComponent() {
+                    this.itemList = [
+                        { name: "Apple" },
+                        { name: "Orange" },
+                        { name: "Grapes" },
+                    ];
                 }
-                MyHelloWorldClass = __decorate([
+                ItemComponent = __decorate([
                     core_1.Component({
-                        selector: 'my-app1'
-                    }),
-                    core_1.View({
-                        template: '<h2>Hello World !! {{appTitle}} {{appTitle1}}</h2>'
+                        selector: 'my-list',
+                        template: "<h2>List of Fruits</h2>\n   <ul>\n      <li *ngFor=\"#myItem of itemList\">{{myItem.name}}</li>\n   </ul>\n   "
                     }), 
                     __metadata('design:paramtypes', [])
-                ], MyHelloWorldClass);
-                return MyHelloWorldClass;
+                ], ItemComponent);
+                return ItemComponent;
             }());
-            exports_1("MyHelloWorldClass", MyHelloWorldClass);
+            exports_1("ItemComponent", ItemComponent);
         }
     }
 });
-//# sourceMappingURL=hello_world_app.component.js.map
+//# sourceMappingURL=item-list.component.js.map
